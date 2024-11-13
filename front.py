@@ -59,7 +59,7 @@ product_category_name = st.selectbox("Product Category", ['Home and Living',
     'Miscellaneous',])
 payment_method = st.selectbox("Payment Method", ["Credit Card", "Wallet", "Voucher", "Debit Card"])
 payment_installment = st.number_input("Payment Installment", step=1)
-shipping_charges = st.number_input("Shipping Charges", step=1)
+shipping_charges = st.number_input("Shipping Charges", step=.01)
 
 # Translates the user input(Destination and Payment Method) into numerical value for the AI Model to read
 customer_state = {
@@ -122,13 +122,13 @@ x3[payment_num] = 1
 
 #Create a dataframe  of the users inputs
 input = {
-    "weight(g)": weight,
-    "volume(cm^3)": length * width * height,
-    **{f"destination_{i}": x1[i] for i in range(27)},
-    **{f"product_category_name_{i}": x2[i] for i in range(14)},
     **{f"payment_method_{i}": x3[i] for i in range(4)},
     "payment_installment": payment_installment,
-    "shipping_charges": shipping_charges
+    "shipping_charges": shipping_charges,
+    **{f"destination_{i}": x1[i] for i in range(27)},
+    **{f"product_category_name_{i}": x2[i] for i in range(14)},
+    "weight(g)": weight,
+    "volume(cm^3)": length * width * height,
 }
 
 user_df = pd.DataFrame([input])
